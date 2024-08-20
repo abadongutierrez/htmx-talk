@@ -1,0 +1,15 @@
+
+    <!--JavaScript at end of body for optimized loading-->
+
+    <script>
+        document.addEventListener('htmx:configRequest', function(evt) {
+            // add token to authentication header
+            console.log('htmx:configRequest');
+            console.log(evt);
+            if (evt.detail.elt.matches("[authenticated='true']")) {
+                evt.detail.headers['Authentication'] = evt.detail.parameters['token']
+            }
+        });
+    </script>
+</body>
+</html> 

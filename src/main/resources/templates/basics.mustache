@@ -1,0 +1,45 @@
+{{> layout/header}}
+
+<h1>Basics</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary"
+                hx-get="/fragments/basics/1"
+                hx-target="#destination-1">Say hello with GET!</button>
+        </div>
+        <div class="col" id="destination-1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form hx-post="/fragments/basics/2"
+                hx-target="#destination-2"
+                hx-swap="outerHMTL">
+                <input type="text" name="name" class="form-control" placeholder="Your name">
+                <input type="text" name="lastName" class="form-control" placeholder="Your last name">
+                <button class="btn btn-primary">Say hello with POST!</button>
+            </form>
+        </div>
+        <div class="col" id="destination-2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form hx-post="/fragments/basics/3"
+                hx-target="#destination-3"
+                hx-swap="outerHMTL"
+                authenticated="true">
+                <input type="text" name="name" class="form-control" placeholder="Your name">
+                <input type="text" name="lastName" class="form-control" placeholder="Your last name">
+                <input type="text" name="token" class="form-control" placeholder="Token">
+                <button class="btn btn-primary">Say hello with POST!</button>
+            </form>
+        </div>
+        <div class="col" id="destination-3">
+        </div>
+    </div>
+</div
+
+{{> layout/footer}}
