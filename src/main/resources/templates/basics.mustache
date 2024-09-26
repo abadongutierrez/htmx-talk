@@ -42,12 +42,16 @@
                 hx-get="/fragments/say-hello"
                 hx-target="next td"
                 hx-trigger="click"
-                hx-include="next div.params">
+                hx-include="next div.params"
+                hx-validate="true"
+                >
                 Say hello with GET!
             </div>
             <div class="params">
-                <input type="text" name="name" class="form-control" placeholder="Your name">
-                <input type="text" name="lastName" class="form-control" placeholder="Your last name">
+                <input type="text" name="name" class="form-control" placeholder="Your name" required
+                    hx-on:htmx:validation:failed="this.reportValidity()">
+                <input type="text" name="lastName" class="form-control" placeholder="Your last name"
+                    hx-on:htmx:validation:failed="this.reportValidity()">
             <div>
         </td>
         <td class="col" id="destination-1">
