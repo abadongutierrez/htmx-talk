@@ -11,6 +11,11 @@ public class HelloController {
         return "hello";
     }
 
+    @RequestMapping("/")
+    public String index() {
+        return "index";
+    }
+
     @RequestMapping("/pages/basics")
     public String basics() {
         return "basics";

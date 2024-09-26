@@ -2,18 +2,68 @@
 
 <h1>Basics</h1>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
+<table class="container">
+    <tr class="row with-border">
+        <td class="col">
+            <a href="/pages/basics" class="btn btn-primary">Link clasico</a>
+        </td>
+        <td class="col">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <div style="background-color: lightgray"
+                hx-get="/fragments/say-hello?name=JConf 2024"
+                hx-target="next td"
+                hx-trigger="click">
+                Say hello with GET!
+            </div>
+        </td>
+        <td class="col" id="destination-1">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <div style="background-color: lightgray"
+                hx-get="/fragments/say-hello"
+                hx-target="next td"
+                hx-trigger="click"
+                hx-include="next input[name='name']">
+                Say hello with GET!
+            </div>
+            <input type="text" name="name" class="form-control" placeholder="Your name">
+        </td>
+        <td class="col" id="destination-1">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <div style="background-color: lightgray"
+                hx-get="/fragments/say-hello"
+                hx-target="next td"
+                hx-trigger="click"
+                hx-include="next div.params">
+                Say hello with GET!
+            </div>
+            <div class="params">
+                <input type="text" name="name" class="form-control" placeholder="Your name">
+                <input type="text" name="lastName" class="form-control" placeholder="Your last name">
+            <div>
+        </td>
+        <td class="col" id="destination-1">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
             <button class="btn btn-primary"
                 hx-get="/fragments/basics/1"
                 hx-target="#destination-1">Say hello with GET!</button>
-        </div>
-        <div class="col" id="destination-1">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
+        </td>
+        <td class="col">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col" style="padding-bottom: 50px">
             <form hx-post="/fragments/basics/2"
                 hx-target="#destination-2"
                 hx-swap="outerHMTL">
@@ -21,25 +71,22 @@
                 <input type="text" name="lastName" class="form-control" placeholder="Your last name">
                 <button class="btn btn-primary">Say hello with POST!</button>
             </form>
-        </div>
-        <div class="col" id="destination-2">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
+        </td>
+        <td class="col" id="destination-2">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col" style="padding-bottom: 50px">
             <form hx-post="/fragments/basics/3"
                 hx-target="#destination-3"
-                hx-swap="outerHMTL"
                 authenticated="true">
-                <input type="text" name="name" class="form-control" placeholder="Your name">
-                <input type="text" name="lastName" class="form-control" placeholder="Your last name">
                 <input type="text" name="token" class="form-control" placeholder="Token">
                 <button class="btn btn-primary">Say hello with POST!</button>
             </form>
-        </div>
-        <div class="col" id="destination-3">
-        </div>
-    </div>
-</div
+        </td>
+        <td class="col" id="destination-3">
+        </td>
+    </tr>
+</table>
 
 {{> layout/footer}}

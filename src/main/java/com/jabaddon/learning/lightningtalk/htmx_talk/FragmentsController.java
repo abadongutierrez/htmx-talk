@@ -1,5 +1,6 @@
 package com.jabaddon.learning.lightningtalk.htmx_talk;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/fragments")
 public class FragmentsController {
 
+    @GetMapping("/say-hello")
+    public ModelAndView sayHello(@RequestParam String name, @RequestParam(required=false) String lastName) {
+        Map<String, String> model = new HashMap<>();
+        model.put("wholeName", name + (lastName != null ? " " + lastName : ""));
+        return new ModelAndView("fragments/say-hello", model);
+    }
+
     @GetMapping("/basics/1")
     public String basics1() {
         return "fragments/basics1";
@@ -25,11 +33,11 @@ public class FragmentsController {
     }
 
     @PostMapping("/basics/3")
-    public ModelAndView basics3(@RequestParam String name, @RequestParam String lastName, @RequestHeader("Authentication") String token) {
+    public ModelAndView basics3(@RequestHeader("Authentication") String token) {
         if (!"123445".equals(token)) {
-            return new ModelAndView("fragments/basics3", Map.of("error", "Token is required"));
+            return new ModelAndView("fragments/basics3", Map.of("error", "Not authorized"));
         }
-        return new ModelAndView("fragments/basics3", Map.of("name", name, "lastName", lastName));
+        return new ModelAndView("fragments/basics3");
     }
 }
 
