@@ -1,0 +1,7 @@
+<span>{{name}}</span>
+{{#isEmail}}
+    <a href="mailto:{{email}}">Send Email</a>
+{{/isEmail}}
+{{^isEmail}}
+    <span>No email</span>
+{{/isEmail}}

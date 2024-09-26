@@ -2,6 +2,14 @@
 
 <h1>Basics</h1>
 
+<script>
+    function verifyAndReportValidity(event) {
+        console.log('verifyAndReportValidity ', event);
+        console.log(this);
+        event.target.reportValidity();
+    }
+</script>
+
 <table class="container">
     <tr class="row with-border">
         <td class="col">
@@ -16,7 +24,7 @@
                 hx-get="/fragments/say-hello?name=JConf 2024"
                 hx-target="next td"
                 hx-trigger="click">
-                Say hello with GET!
+                Hello!
             </div>
         </td>
         <td class="col" id="destination-1">
@@ -29,7 +37,7 @@
                 hx-target="next td"
                 hx-trigger="click"
                 hx-include="next input[name='name']">
-                Say hello with GET!
+                Say hello with name
             </div>
             <input type="text" name="name" class="form-control" placeholder="Your name">
         </td>
@@ -39,22 +47,43 @@
     <tr class="row with-border">
         <td class="col">
             <div style="background-color: lightgray"
-                hx-get="/fragments/say-hello"
+                hx-get="/fragments/echo-name-email"
                 hx-target="next td"
                 hx-trigger="click"
-                hx-include="next div.params"
+                hx-include="next form"
                 hx-validate="true"
-                >
-                Say hello with GET!
+                id="send-email">
+                Send email
             </div>
-            <div class="params">
+            <form id="echo-params">
                 <input type="text" name="name" class="form-control" placeholder="Your name" required
                     hx-on:htmx:validation:failed="this.reportValidity()">
-                <input type="text" name="lastName" class="form-control" placeholder="Your last name"
+                <input type="email" name="email" class="form-control" placeholder="Your email"
                     hx-on:htmx:validation:failed="this.reportValidity()">
-            <div>
+            <form>
         </td>
         <td class="col" id="destination-1">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <form id="sum-form" hx-on:htmx:validation:failed="if (event.srcElement.id == 'sum-button') { this.reportValidity() }">
+                <input type="number" name="number1" class="form-control" placeholder="First number" required>
+                <input type="number" name="number2" class="form-control" placeholder="Second number" required>
+                <input type="number" name="waitTime" class="form-control" placeholder="Wait time in seconds">
+
+                <button class="btn btn-primary"
+                    hx-post="/fragments/sum-data"
+                    hx-target="next td"
+                    hx-trigger="click"
+                    hx-include="this"
+                    hx-validate="true"
+                    id="sum-button">
+                    Sum this numbers
+                </button>
+            <form>
+        </td>
+        <td class="col">
         </td>
     </tr>
     <tr class="row with-border">
