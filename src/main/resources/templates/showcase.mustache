@@ -60,6 +60,46 @@
     </tr>
     <tr class="row with-border">
         <td class="col">
+            <button class="btn btn-danger"
+                hx-delete="/fragments/entity/150"
+                hx-target="next td"
+                hx-trigger="click"
+                hx-swap="innerHTML settle:500ms"
+                hx-confirm="Seguro que quieres borrar la entidad 150?"
+                >
+                Borrar entidad 150
+            </button>
+        </td>
+        <td class="col">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <h5>Buscar cuando murio un personaje de GOT</h5>
+            <input class="form-control" type="search" 
+                name="search" placeholder="Escribe para empezar a buscar..." 
+                hx-post="/fragments/got/died" 
+                hx-trigger="input changed delay:500ms, search" 
+                hx-target="#got-search-results" 
+                hx-indicator="#got-loading">
+        </td>
+        <td class="col">
+            <img id="got-loading" class="htmx-indicator" src="/loading.gif"/>
+            <div id="got-search-results"></div>
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <script>
+                function sumFormBeforeRequest(event) {
+                    console.log('beforeRequest');
+                    if (confirm('Seguro?')) {
+                        document.querySelector('.sum-content').innerHTML = '';
+                    } else {
+                        event.preventDefault(); // Cancel the request
+                    }
+                }
+            </script>
             <form id="sum-form" hx-on:htmx:validation:failed="this.reportValidity()">
                 <input type="number" name="a" class="form-control" placeholder="First number" required>
                 <input type="number" name="b" class="form-control" placeholder="Second number" required>
@@ -73,8 +113,9 @@
                     hx-validate="true"
                     id="sum-button"
                     hx-indicator="#spinner"
-                    hx-on:htmx:before-request="console.log('beforeRequest'); document.querySelector('.sum-content').innerHTML = '';"
-                    hx-on:htmx:after-request="console.log('afterRequest');">
+                    hx-on:htmx:before-request="sumFormBeforeRequest(event)"
+                    hx-on:htmx:after-request="console.log('afterRequest');"
+                    >
                     Sumar numeros
                 </button>
             </form>

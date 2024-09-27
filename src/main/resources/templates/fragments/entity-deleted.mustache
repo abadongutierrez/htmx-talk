@@ -1,0 +1,13 @@
+<style>
+#fade-me-in.htmx-added {
+  opacity: 0;
+}
+#fade-me-in {
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+</style>
+
+<div id="fade-me-in" class="alert alert-success" role="alert">
+  {{message}}
+</div>

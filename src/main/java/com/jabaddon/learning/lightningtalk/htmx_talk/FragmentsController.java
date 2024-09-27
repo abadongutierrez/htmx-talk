@@ -16,7 +16,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +57,12 @@ public class FragmentsController {
         return new ModelAndView("fragments/echo-name-email", model);
     }
 
+    @DeleteMapping("/entity/{id}")
+    public ModelAndView deleteEntity(@PathVariable String id) {
+        logger.info("Deleting entity with id: {}", id);
+        return new ModelAndView("fragments/entity-deleted", Map.of("message", "Entidad con id: " + id + " borrada"));
+    }
+
     @PostMapping("/sum-data")
     public ModelAndView sumData(@RequestParam int a, @RequestParam int b, @RequestParam(required = false) Integer waitTime) {
         int sum = a + b;
@@ -68,6 +76,52 @@ public class FragmentsController {
            logger.error("Error", e); 
         }
         return new ModelAndView("fragments/sum-data", model);
+    }
+
+    @PostMapping("/got/died")
+    public ModelAndView gotDied(@RequestParam String search) {
+        logger.info("search: {}", search);
+
+        List<String> gotDeaths = new ArrayList<>();
+
+        gotDeaths.add("Eddard Stark – Season 1, Episode 9 (Baelor)");
+        gotDeaths.add("Khal Drogo – Season 1, Episode 10 (Fire and Blood)");
+        gotDeaths.add("Renly Baratheon – Season 2, Episode 5 (The Ghost of Harrenhal)");
+        gotDeaths.add("Maester Luwin – Season 2, Episode 10 (Valar Morghulis)");
+        gotDeaths.add("Robb Stark – Season 3, Episode 9 (The Rains of Castamere)");
+        gotDeaths.add("Catelyn Stark – Season 3, Episode 9 (The Rains of Castamere)");
+        gotDeaths.add("Talisa Stark – Season 3, Episode 9 (The Rains of Castamere)");
+        gotDeaths.add("Joffrey Baratheon – Season 4, Episode 2 (The Lion and the Rose)");
+        gotDeaths.add("Oberyn Martell – Season 4, Episode 8 (The Mountain and the Viper)");
+        gotDeaths.add("Ygritte – Season 4, Episode 9 (The Watchers on the Wall)");
+        gotDeaths.add("Shae – Season 4, Episode 10 (The Children)");
+        gotDeaths.add("Tywin Lannister – Season 4, Episode 10 (The Children)");
+        gotDeaths.add("Mance Rayder – Season 5, Episode 1 (The Wars to Come)");
+        gotDeaths.add("Barristan Selmy – Season 5, Episode 4 (Sons of the Harpy)");
+        gotDeaths.add("Shireen Baratheon – Season 5, Episode 9 (The Dance of Dragons)");
+        gotDeaths.add("Selyse Baratheon – Season 5, Episode 10 (Mother’s Mercy)");
+        gotDeaths.add("Stannis Baratheon – Season 5, Episode 10 (Mother’s Mercy)");
+        gotDeaths.add("Myrcella Baratheon – Season 5, Episode 10 (Mother’s Mercy)");
+        gotDeaths.add("Ramsay Bolton – Season 6, Episode 9 (Battle of the Bastards)");
+        gotDeaths.add("Hodor – Season 6, Episode 5 (The Door)");
+        gotDeaths.add("Tommen Baratheon – Season 6, Episode 10 (The Winds of Winter)");
+        gotDeaths.add("Walder Frey – Season 6, Episode 10 (The Winds of Winter)");
+        gotDeaths.add("Obara and Nymeria Sand – Season 7, Episode 2 (Stormborn)");
+        gotDeaths.add("Olenna Tyrell – Season 7, Episode 3 (The Queen's Justice)");
+        gotDeaths.add("Petyr Baelish – Season 7, Episode 7 (The Dragon and the Wolf)");
+        gotDeaths.add("Viserion – Season 7, Episode 6 (Beyond the Wall)");
+        gotDeaths.add("The Night King – Season 8, Episode 3 (The Long Night)");
+        gotDeaths.add("Jorah Mormont – Season 8, Episode 3 (The Long Night)");
+        gotDeaths.add("Theon Greyjoy – Season 8, Episode 3 (The Long Night)");
+        gotDeaths.add("Melisandre – Season 8, Episode 3 (The Long Night)");
+        gotDeaths.add("Missandei – Season 8, Episode 4 (The Last of the Starks)");
+        gotDeaths.add("Varys – Season 8, Episode 5 (The Bells)");
+        gotDeaths.add("Euron Greyjoy – Season 8, Episode 5 (The Bells)");
+        gotDeaths.add("Cersei and Jaime Lannister – Season 8, Episode 5 (The Bells)");
+        gotDeaths.add("Daenerys Targaryen – Season 8, Episode 6 (The Iron Throne)");
+
+        return new ModelAndView("fragments/got-died",
+            Map.of("characters", gotDeaths.stream().filter(predicate -> predicate.contains(search)).toList()));
     }
 
     @PostMapping("/multiplication-table")
