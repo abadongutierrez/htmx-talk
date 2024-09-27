@@ -1,19 +1,9 @@
 {{> layout/header}}
 
-<h1>Basics</h1>
-
-<script>
-    function verifyAndReportValidity(event) {
-        console.log('verifyAndReportValidity ', event);
-        console.log(this);
-        event.target.reportValidity();
-    }
-</script>
-
 <table class="container">
     <tr class="row with-border">
         <td class="col">
-            <a href="/pages/basics" class="btn btn-primary">Link clasico</a>
+            <a href="/pages/showcase" class="btn btn-primary">Link clasico</a>
         </td>
         <td class="col">
         </td>
@@ -24,7 +14,7 @@
                 hx-get="/fragments/say-hello?name=JConf 2024"
                 hx-target="next td"
                 hx-trigger="click">
-                Hello!
+                Hola!
             </div>
         </td>
         <td class="col" id="destination-1">
@@ -37,7 +27,7 @@
                 hx-target="next td"
                 hx-trigger="click"
                 hx-include="next input[name='name']">
-                Say hello with name
+                Dime hola usando tu nombre
             </div>
             <input type="text" name="name" class="form-control" placeholder="Your name">
         </td>
@@ -52,72 +42,63 @@
                 hx-trigger="click"
                 hx-include="next form"
                 hx-validate="true"
-                id="send-email">
-                Send email
+                >
+                Mandar correo
             </div>
-            <form id="echo-params">
+            <form>
                 <input type="text" name="name" class="form-control" placeholder="Your name" required
                     hx-on:htmx:validation:failed="this.reportValidity()">
                 <input type="email" name="email" class="form-control" placeholder="Your email"
                     hx-on:htmx:validation:failed="this.reportValidity()">
-            <form>
+            </form>
         </td>
         <td class="col" id="destination-1">
         </td>
     </tr>
     <tr class="row with-border">
         <td class="col">
-            <form id="sum-form" hx-on:htmx:validation:failed="if (event.srcElement.id == 'sum-button') { this.reportValidity() }">
-                <input type="number" name="number1" class="form-control" placeholder="First number" required>
-                <input type="number" name="number2" class="form-control" placeholder="Second number" required>
+            <form id="sum-form" hx-on:htmx:validation:failed="this.reportValidity()">
+                <input type="number" name="a" class="form-control" placeholder="First number" required>
+                <input type="number" name="b" class="form-control" placeholder="Second number" required>
                 <input type="number" name="waitTime" class="form-control" placeholder="Wait time in seconds">
 
                 <button class="btn btn-primary"
                     hx-post="/fragments/sum-data"
-                    hx-target="next td"
+                    hx-target="next td .sum-content"
                     hx-trigger="click"
                     hx-include="this"
                     hx-validate="true"
-                    id="sum-button">
-                    Sum this numbers
+                    id="sum-button"
+                    hx-indicator="#spinner"
+                    hx-on:htmx:before-request="console.log('beforeRequest'); document.querySelector('.sum-content').innerHTML = '';"
+                    hx-on:htmx:after-request="console.log('afterRequest');">
+                    Sumar numeros
                 </button>
-            <form>
-        </td>
-        <td class="col">
-        </td>
-    </tr>
-    <tr class="row with-border">
-        <td class="col">
-            <button class="btn btn-primary"
-                hx-get="/fragments/basics/1"
-                hx-target="#destination-1">Say hello with GET!</button>
-        </td>
-        <td class="col">
-        </td>
-    </tr>
-    <tr class="row with-border">
-        <td class="col" style="padding-bottom: 50px">
-            <form hx-post="/fragments/basics/2"
-                hx-target="#destination-2"
-                hx-swap="outerHMTL">
-                <input type="text" name="name" class="form-control" placeholder="Your name">
-                <input type="text" name="lastName" class="form-control" placeholder="Your last name">
-                <button class="btn btn-primary">Say hello with POST!</button>
             </form>
         </td>
-        <td class="col" id="destination-2">
+        <td class="col">
+            <img id="spinner" class="htmx-indicator" src="/loading.gif"/>
+            <div class="sum-content"></div>
         </td>
     </tr>
     <tr class="row with-border">
-        <td class="col" style="padding-bottom: 50px">
-            <form hx-post="/fragments/basics/3"
-                hx-target="#destination-3"
-                authenticated="true">
-                <input type="text" name="token" class="form-control" placeholder="Token">
-                <button class="btn btn-primary">Say hello with POST!</button>
+        <td class="col">
+            <form id="multiplication-table-form" hx-on:htmx:validation:failed="this.reportValidity()">
+                <input type="number" name="number" class="form-control" placeholder="Tabla del ?" required>
+                <input type="number" name="errorProbability" class="form-control" placeholder="Probabilidad de error"
+                    min="0.0" max="1.0" step="0.1" required>
+
+                <button class="btn btn-primary"
+                    hx-post="/fragments/multiplication-table"
+                    hx-target="next td"
+                    hx-trigger="click"
+                    hx-include="this"
+                    hx-validate="true">
+                    Generar tabla
+                </button>
             </form>
         </td>
-        <td class="col" id="destination-3">
+        <td class="col">
         </td>
     </tr>
 </table>

@@ -1,0 +1,11 @@
+<div hx-trigger="multiply-{{taskId}}-done"
+    hx-get="/fragments/multiply/done?taskId={{taskId}}"
+    hx-swap="outerHTML" hx-target="this">
+  <div
+    hx-get="/fragments/multiply/progress?taskId={{taskId}}"
+    hx-trigger="every 1000ms"
+    hx-target="this"
+    hx-swap="innerHTML">
+        <span>{{status}}</span>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{{!-- this could be a reusable fragment --}}
+<form>
+    <input type="hidden" name="a" value="{{a}}">
+    <input type="hidden" name="b" value="{{b}}">
+    <button
+        id="button-{{a}}x{{b}}"
+        class="btn btn-success"
+        hx-post="/fragments/multiply/start"
+        hx-trigger="click"
+        hx-target="#button-{{a}}x{{b}}"
+        hx-on:htmx:before-request="document.querySelector('#multiply-table-error').innerHTML = ''">
+        Oops, intenta de nuevo
+    </button>
+</form>
+
+<div id="multiply-table-error" hx-swap-oob="innerHTML">
+    <div class="alert alert-danger" role="alert">
+        {{error}}
+    </div>
+</div

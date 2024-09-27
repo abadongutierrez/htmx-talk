@@ -1,0 +1,28 @@
+<div id="multiply-table-error"></div>
+<table border="1">
+    <tbody>
+        {{#table}}
+        <tr>
+            <td>{{number}}</td>
+            <td>x</td>
+            <td>{{.}}</td>
+            <td>=</td>
+            <td id="button-{{number}}x{{.}}">
+                <form>
+                    <input type="hidden" name="a" value="{{number}}">
+                    <input type="hidden" name="b" value="{{.}}">
+                    <input type="hidden" name="errorProbability" value="{{errorProbability}}">
+                    <button
+                        id="button-{{number}}x{{.}}"
+                        class="btn btn-primary"
+                        hx-post="/fragments/multiply/start"
+                        hx-trigger="click"
+                        hx-target="#button-{{number}}x{{.}}">
+                        Calcular 
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {{/table}}
+    </tbody>
+</table>

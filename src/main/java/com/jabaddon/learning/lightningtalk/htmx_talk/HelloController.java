@@ -16,8 +16,8 @@ public class HelloController {
         return "index";
     }
 
-    @RequestMapping("/pages/basics")
+    @RequestMapping("/pages/showcase")
     public String basics() {
-        return "basics";
+        return "showcase";
     }
 }
