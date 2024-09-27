@@ -245,6 +245,11 @@ public class FragmentsController {
         }
         return new ModelAndView("fragments/basics3");
     }
+
+    @GetMapping("/next-steps")
+    public ModelAndView nextSteps() {
+        return new ModelAndView("fragments/next-steps");
+    }
 }
 
 record Person(String name, String lastName) {
