@@ -23,7 +23,7 @@
             if (!existing) {
                 var newDiv = document.createElement('div');
                 newDiv.className = 'alert alert-danger';
-                newDiv.setAttribute('role', 'sendError');
+                newDiv.setAttribute('role', 'responseError');
                 newDiv.textContent = 'El servidor respondió con un error';
                 generalErrorDiv.appendChild(newDiv);
             }
