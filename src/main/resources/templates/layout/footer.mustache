@@ -9,6 +9,38 @@
                 evt.detail.headers['Authentication'] = evt.detail.parameters['token']
             }
         });
+        document.addEventListener('htmx:afterOnLoad', function(evt) {
+            console.log('htmx:beforeRequest', evt);
+            var generalErrorDiv = document.querySelector('#general-error');
+            // Remove all existing error messages
+            generalErrorDiv.innerHTML = '';
+        });
+        document.addEventListener('htmx:responseError', function(evt) {
+            console.log('htmx:responseError', evt);
+            var generalErrorDiv = document.querySelector('#general-error');
+            var existing = generalErrorDiv.querySelector('div[role="responseError"]');
+            
+            if (!existing) {
+                var newDiv = document.createElement('div');
+                newDiv.className = 'alert alert-danger';
+                newDiv.setAttribute('role', 'sendError');
+                newDiv.textContent = 'El servidor respondió con un error';
+                generalErrorDiv.appendChild(newDiv);
+            }
+        });
+        document.addEventListener('htmx:sendError', function(evt) {
+            console.log('htmx:sendError', evt);
+            var generalErrorDiv = document.querySelector('#general-error');
+            var existing = generalErrorDiv.querySelector('div[role="sendError"]');
+            
+            if (!existing) {
+                var newDiv = document.createElement('div');
+                newDiv.className = 'alert alert-danger';
+                newDiv.setAttribute('role', 'sendError');
+                newDiv.textContent = 'No podemos comunicarnos con el servidor';
+                generalErrorDiv.appendChild(newDiv);
+            }
+        });
     </script>
 </body>
 </html> 
