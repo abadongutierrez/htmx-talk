@@ -105,11 +105,27 @@
         <td class="col">
         </td>
     </tr>
+     <tr class="row with-border">
+        <td class="col">
+            <h5>Buscar categorías</h5>
+            <input class="form-control" type="text" 
+                name="query" placeholder="Escribe para buscar categorías..." 
+                list="category-list" 
+                hx-get="/fragments/categories/search" 
+                hx-trigger="input changed delay:500ms, enter" 
+                hx-target="#category-list" 
+                hx-indicator="#category-loading">
+            <datalist id="category-list"></datalist>
+        </td>
+        <td class="col">
+            <img id="category-loading" class="htmx-indicator" src="/loading.gif"/>
+        </td>
+    </tr>
     <tr class="row with-border">
         <td class="col">
             <h5>Buscar cuando murio un personaje de GOT</h5>
             <input class="form-control" type="search" 
-                name="search" placeholder="Escribe para empezar a buscar..." 
+                name="search" placeholder="Escribe para buscar personajes de GOT..." 
                 hx-post="/fragments/got/died" 
                 hx-trigger="input changed delay:500ms, search" 
                 hx-target="#got-search-results" 
@@ -172,6 +188,31 @@
                     hx-validate="true">
                     Generar tabla
                 </button>
+            </form>
+        </td>
+        <td class="col">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <h5>Usalo con cuidado y valida input (XSS)</h5>
+            <form>
+             <div class="mb-3">
+                <textarea name="input"><script>alert('XSS Attack!');</script><span style="color: green">Hola</span></textarea>
+            </div>
+            <div class="mb-3">
+                <input class="form-check-input" type="checkbox" id="sanitize" name="sanitize">
+                <label class="form-check-label" for="sanitize">
+                    Sanitizar?
+                </label>
+            </div>
+                <button class="btn btn-warning"
+                    hx-post="/fragments/echo-input"
+                    hx-target="next td"
+                    hx-trigger="click"
+                    hx-include="this"
+                    >
+                    Enviar
             </form>
         </td>
         <td class="col">

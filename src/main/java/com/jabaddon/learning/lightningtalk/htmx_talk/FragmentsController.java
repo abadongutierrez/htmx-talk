@@ -1,5 +1,6 @@
 package com.jabaddon.learning.lightningtalk.htmx_talk;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +14,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
+import org.owasp.validator.html.AntiSamy;
+import org.owasp.validator.html.CleanResults;
+import org.owasp.validator.html.Policy;
+import org.owasp.validator.html.PolicyException;
+import org.owasp.validator.html.ScanException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -121,7 +128,7 @@ public class FragmentsController {
         gotDeaths.add("Daenerys Targaryen – Season 8, Episode 6 (The Iron Throne)");
 
         return new ModelAndView("fragments/got-died",
-            Map.of("characters", gotDeaths.stream().filter(predicate -> predicate.contains(search)).toList()));
+            Map.of("characters", gotDeaths.stream().filter(predicate -> predicate.toLowerCase().contains(search.toLowerCase())).toList()));
     }
 
     @PostMapping("/multiplication-table")
@@ -249,6 +256,36 @@ public class FragmentsController {
     @GetMapping("/next-steps")
     public ModelAndView nextSteps() {
         return new ModelAndView("fragments/next-steps");
+    }
+
+    @GetMapping("/categories/search")
+    public ResponseEntity<String> searchCategories(@RequestParam String query) {
+        List<String> categories = List.of("Technology", "Science", "Health", "Education", "Sports", "Entertainment");
+        List<String> filteredCategories = categories.stream()
+                .filter(category -> category.toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+
+        String options = filteredCategories.stream()
+                .map(category -> "<option value=\"" + category + "\">")
+                .collect(Collectors.joining());
+
+        return ResponseEntity.ok(options);
+    }
+
+    @PostMapping("/echo-input")
+    public ResponseEntity<String> echoInput(@RequestParam String input, @RequestParam(required=false) Boolean sanitize) {
+        if (sanitize != null && sanitize) {
+            AntiSamy antiSamy = new AntiSamy();
+            try {
+                URL url = getClass().getResource("/antisamy.xml");
+                CleanResults rs = antiSamy.scan(input, Policy.getInstance(url));
+                input = rs.getCleanHTML();
+            } catch (PolicyException | ScanException e) {
+                logger.error("Error sanitizing input", e);
+                return ResponseEntity.badRequest().body("<span style=\"color: red\">Error sanitizing input<span>");
+            }
+        }
+        return ResponseEntity.ok(input);
     }
 }
 
