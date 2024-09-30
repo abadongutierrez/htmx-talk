@@ -4,19 +4,20 @@
     <script>
         document.addEventListener('htmx:configRequest', function(evt) {
             // add token to authentication header
-            console.log('htmx:configRequest');
+            console.log('global, htmx:configRequest');
             if (evt.detail.elt.matches("[authenticated='true']")) {
                 evt.detail.headers['Authentication'] = evt.detail.parameters['token']
             }
         });
         document.addEventListener('htmx:afterOnLoad', function(evt) {
-            console.log('htmx:beforeRequest', evt);
+            console.log('global, htmx:afterOnLoad');
             var generalErrorDiv = document.querySelector('#general-error');
             // Remove all existing error messages
             generalErrorDiv.innerHTML = '';
         });
+        // when respone errors (non 200 or 300 status)
         document.addEventListener('htmx:responseError', function(evt) {
-            console.log('htmx:responseError', evt);
+            console.log('global, htmx:responseError');
             var generalErrorDiv = document.querySelector('#general-error');
             var existing = generalErrorDiv.querySelector('div[role="responseError"]');
             
@@ -28,8 +29,9 @@
                 generalErrorDiv.appendChild(newDiv);
             }
         });
+        // when network error prevents HTTP requests
         document.addEventListener('htmx:sendError', function(evt) {
-            console.log('htmx:sendError', evt);
+            console.log('global, htmx:sendError');
             var generalErrorDiv = document.querySelector('#general-error');
             var existing = generalErrorDiv.querySelector('div[role="sendError"]');
             
@@ -40,6 +42,19 @@
                 newDiv.textContent = 'No podemos comunicarnos con el servidor';
                 generalErrorDiv.appendChild(newDiv);
             }
+        });
+
+        document.addEventListener('htmx:beforeRequest', function (evt) {
+            console.log('global, htmx:beforeRequest');
+        });
+        document.addEventListener('htmx:afterRequest', function (evt) {
+            console.log('global, htmx:afterRequest');
+        });
+        document.addEventListener('htmx:beforeSettle', function (evt) {
+            console.log('global, htmx:beforeSettle');
+        });
+        document.addEventListener('htmx:afterSettle', function (evt) {
+            console.log('global, htmx:afterSettle');
         });
     </script>
 </body>

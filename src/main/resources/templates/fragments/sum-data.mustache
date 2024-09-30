@@ -1,1 +1,7 @@
-<span>{{result}}</span>
+{{!-- htmx event does not work here, and makes totally sense --}}
+<span
+    hx-on:htmx:after-settle="console.log('response, afterSetle')"
+    hx-on:htmx:after-swap="console.log('response, afterSwap')"
+    hx-on:htmx:after-process-node="console.log('response, afterProcessNode')">
+    {{result}}
+</span>

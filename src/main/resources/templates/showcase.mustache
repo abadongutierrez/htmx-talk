@@ -140,7 +140,7 @@
         <td class="col">
             <script>
                 function sumFormBeforeRequest(event) {
-                    console.log('beforeRequest');
+                    console.log('request, beforeRequest');
                     if (confirm('Seguro?')) {
                         document.querySelector('.sum-content').innerHTML = '';
                     } else {
@@ -161,15 +161,43 @@
                     hx-validate="true"
                     id="sum-button"
                     hx-indicator="#spinner"
+                    hx-on:htmx:before-cleanup-element="console.log('request, beforeCleanupElement')"
+                    hx-on:htmx:before-on-load="console.log('request, beforeOnLoad')"
+                    hx-on:htmx:before-process-node="console.log('request, beforeProcessNode')"
                     hx-on:htmx:before-request="sumFormBeforeRequest(event); this.disabled = true"
-                    hx-on:htmx:after-request="console.log('afterRequest'); this.disabled = false">
+                    hx-on:htmx:before-swap="console.log('request, beforeSwap')"
+                    hx-on:htmx:before-send="console.log('request, beforeSend')"
+                    hx-on:htmx:before-transition="console.log('request, beforeTransition')"
+                    hx-on:htmx:after-request="console.log('request, afterRequest')"
+                    hx-on:htmx:after-on-load="console.log('request, afterOnLoad')"
+                    hx-on:htmx:after-swap="console.log('request, afterSwap')"
+                    hx-on:htmx:after-settle="console.log('request, afterSettle')"
+                    hx-on:htmx:after-process-node="console.log('request, afterProcessNode')"
+                    hx-on:sum-data-done="console.log('request, sum-data-done')"
+                    hx-on:sum-data-done-after-swap="console.log('request, sum-data-done-after-swap')"
+                    hx-on:sum-data-done-after-settle="console.log('request, sum-data-done-after-settle'); this.disabled = false">
+                    {{!-- afterSwap and afterSettle are not working here --}}
                     Sumar numeros
                 </button>
             </form>
         </td>
         <td class="col">
             <img id="spinner" class="htmx-indicator" src="/loading.gif"/>
-            <div class="sum-content"></div>
+            <div class="sum-content"
+                hx-on:htmx:before-cleanup-element="console.log('target, beforeCleanupElement')"
+                hx-on:htmx:before-on-load="console.log('target, beforeOnLoad')"
+                hx-on:htmx:before-process-node="console.log('target, beforeProcessNode')"
+                hx-on:htmx:before-request="console.log('target, beforeRequest')"
+                hx-on:htmx:before-swap="console.log('target, beforeSwap')"
+                hx-on:htmx:before-send="console.log('target, beforeSend')"
+                hx-on:htmx:before-transition="console.log('target, beforeTransition')"
+                hx-on:htmx:after-request="console.log('target, afterRequest')"
+                hx-on:htmx:after-on-load="console.log('target, afterOnLoad')"
+                hx-on:htmx:after-settle="console.log('target, afterSettle')"
+                hx-on:htmx:after-swap="console.log('target, afterSwap')"
+                hx-on:htmx:after-process-node="console.log('target, afterProcessNode')">
+                {{!-- beforeRequest, afterRequest are not working here --}}
+            </div>
         </td>
     </tr>
     <tr class="row with-border">

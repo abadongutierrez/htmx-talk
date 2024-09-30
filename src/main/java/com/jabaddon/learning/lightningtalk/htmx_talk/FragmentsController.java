@@ -71,7 +71,8 @@ public class FragmentsController {
     }
 
     @PostMapping("/sum-data")
-    public ModelAndView sumData(@RequestParam int a, @RequestParam int b, @RequestParam(required = false) Integer waitTime) {
+    public ModelAndView sumData(@RequestParam int a, @RequestParam int b, @RequestParam(required = false) Integer waitTime,
+        HttpServletResponse response) {
         int sum = a + b;
         Map<String, Object> model = new HashMap<>();
         model.put("a", a);
@@ -82,6 +83,9 @@ public class FragmentsController {
         } catch (InterruptedException e) {
            logger.error("Error", e); 
         }
+        response.addHeader("HX-Trigger", "sum-data-done");
+        response.addHeader("HX-Trigger-After-Settle", "sum-data-done-after-settle");
+        response.addHeader("HX-Trigger-After-Swap", "sum-data-done-after-swap");
         return new ModelAndView("fragments/sum-data", model);
     }
 
