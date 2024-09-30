@@ -161,9 +161,8 @@
                     hx-validate="true"
                     id="sum-button"
                     hx-indicator="#spinner"
-                    hx-on:htmx:before-request="sumFormBeforeRequest(event)"
-                    hx-on:htmx:after-request="console.log('afterRequest');"
-                    >
+                    hx-on:htmx:before-request="sumFormBeforeRequest(event); this.disabled = true"
+                    hx-on:htmx:after-request="console.log('afterRequest'); this.disabled = false">
                     Sumar numeros
                 </button>
             </form>

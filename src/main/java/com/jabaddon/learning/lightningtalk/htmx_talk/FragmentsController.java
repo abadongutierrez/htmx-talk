@@ -275,8 +275,8 @@ public class FragmentsController {
     @PostMapping("/echo-input")
     public ResponseEntity<String> echoInput(@RequestParam String input, @RequestParam(required=false) Boolean sanitize) {
         if (sanitize != null && sanitize) {
-            AntiSamy antiSamy = new AntiSamy();
             try {
+                AntiSamy antiSamy = new AntiSamy();
                 URL url = getClass().getResource("/antisamy.xml");
                 CleanResults rs = antiSamy.scan(input, Policy.getInstance(url));
                 input = rs.getCleanHTML();
