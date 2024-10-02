@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jabaddon.learning.lightningtalk.htmx_talk.Character;
+
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -93,46 +95,53 @@ public class FragmentsController {
     public ModelAndView gotDied(@RequestParam String search) {
         logger.info("search: {}", search);
 
-        List<String> gotDeaths = new ArrayList<>();
+        List<Character> gotDeads = new ArrayList<>();
 
-        gotDeaths.add("Eddard Stark – Season 1, Episode 9 (Baelor)");
-        gotDeaths.add("Khal Drogo – Season 1, Episode 10 (Fire and Blood)");
-        gotDeaths.add("Renly Baratheon – Season 2, Episode 5 (The Ghost of Harrenhal)");
-        gotDeaths.add("Maester Luwin – Season 2, Episode 10 (Valar Morghulis)");
-        gotDeaths.add("Robb Stark – Season 3, Episode 9 (The Rains of Castamere)");
-        gotDeaths.add("Catelyn Stark – Season 3, Episode 9 (The Rains of Castamere)");
-        gotDeaths.add("Talisa Stark – Season 3, Episode 9 (The Rains of Castamere)");
-        gotDeaths.add("Joffrey Baratheon – Season 4, Episode 2 (The Lion and the Rose)");
-        gotDeaths.add("Oberyn Martell – Season 4, Episode 8 (The Mountain and the Viper)");
-        gotDeaths.add("Ygritte – Season 4, Episode 9 (The Watchers on the Wall)");
-        gotDeaths.add("Shae – Season 4, Episode 10 (The Children)");
-        gotDeaths.add("Tywin Lannister – Season 4, Episode 10 (The Children)");
-        gotDeaths.add("Mance Rayder – Season 5, Episode 1 (The Wars to Come)");
-        gotDeaths.add("Barristan Selmy – Season 5, Episode 4 (Sons of the Harpy)");
-        gotDeaths.add("Shireen Baratheon – Season 5, Episode 9 (The Dance of Dragons)");
-        gotDeaths.add("Selyse Baratheon – Season 5, Episode 10 (Mother’s Mercy)");
-        gotDeaths.add("Stannis Baratheon – Season 5, Episode 10 (Mother’s Mercy)");
-        gotDeaths.add("Myrcella Baratheon – Season 5, Episode 10 (Mother’s Mercy)");
-        gotDeaths.add("Ramsay Bolton – Season 6, Episode 9 (Battle of the Bastards)");
-        gotDeaths.add("Hodor – Season 6, Episode 5 (The Door)");
-        gotDeaths.add("Tommen Baratheon – Season 6, Episode 10 (The Winds of Winter)");
-        gotDeaths.add("Walder Frey – Season 6, Episode 10 (The Winds of Winter)");
-        gotDeaths.add("Obara and Nymeria Sand – Season 7, Episode 2 (Stormborn)");
-        gotDeaths.add("Olenna Tyrell – Season 7, Episode 3 (The Queen's Justice)");
-        gotDeaths.add("Petyr Baelish – Season 7, Episode 7 (The Dragon and the Wolf)");
-        gotDeaths.add("Viserion – Season 7, Episode 6 (Beyond the Wall)");
-        gotDeaths.add("The Night King – Season 8, Episode 3 (The Long Night)");
-        gotDeaths.add("Jorah Mormont – Season 8, Episode 3 (The Long Night)");
-        gotDeaths.add("Theon Greyjoy – Season 8, Episode 3 (The Long Night)");
-        gotDeaths.add("Melisandre – Season 8, Episode 3 (The Long Night)");
-        gotDeaths.add("Missandei – Season 8, Episode 4 (The Last of the Starks)");
-        gotDeaths.add("Varys – Season 8, Episode 5 (The Bells)");
-        gotDeaths.add("Euron Greyjoy – Season 8, Episode 5 (The Bells)");
-        gotDeaths.add("Cersei and Jaime Lannister – Season 8, Episode 5 (The Bells)");
-        gotDeaths.add("Daenerys Targaryen – Season 8, Episode 6 (The Iron Throne)");
+        gotDeads.add(new Character("Eddard Stark", "Season 1, Episode 9 (Baelor)"));
+        gotDeads.add(new Character("Khal Drogo", "Season 1, Episode 10 (Fire and Blood)"));
+        gotDeads.add(new Character("Renly Baratheon", "Season 2, Episode 5 (The Ghost of Harrenhal)"));
+        gotDeads.add(new Character("Maester Luwin", "Season 2, Episode 10 (Valar Morghulis)"));
+        gotDeads.add(new Character("Robb Stark", "Season 3, Episode 9 (The Rains of Castamere)"));
+        gotDeads.add(new Character("Catelyn Stark", "Season 3, Episode 9 (The Rains of Castamere)"));
+        gotDeads.add(new Character("Talisa Stark", "Season 3, Episode 9 (The Rains of Castamere)"));
+        gotDeads.add(new Character("Joffrey Baratheon", "Season 4, Episode 2 (The Lion and the Rose)"));
+        gotDeads.add(new Character("Oberyn Martell", "Season 4, Episode 8 (The Mountain and the Viper)"));
+        gotDeads.add(new Character("Ygritte", "Season 4, Episode 9 (The Watchers on the Wall)"));
+        gotDeads.add(new Character("Shae", "Season 4, Episode 10 (The Children)"));
+        gotDeads.add(new Character("Tywin Lannister", "Season 4, Episode 10 (The Children)"));
+        gotDeads.add(new Character("Mance Rayder", "Season 5, Episode 1 (The Wars to Come)"));
+        gotDeads.add(new Character("Barristan Selmy", "Season 5, Episode 4 (Sons of the Harpy)"));
+        gotDeads.add(new Character("Shireen Baratheon", "Season 5, Episode 9 (The Dance of Dragons)"));
+        gotDeads.add(new Character("Selyse Baratheon", "Season 5, Episode 10 (Mother’s Mercy)"));
+        gotDeads.add(new Character("Stannis Baratheon", "Season 5, Episode 10 (Mother’s Mercy)"));
+        gotDeads.add(new Character("Myrcella Baratheon", "Season 5, Episode 10 (Mother’s Mercy)"));
+        gotDeads.add(new Character("Ramsay Bolton", "Season 6, Episode 9 (Battle of the Bastards)"));
+        gotDeads.add(new Character("Hodor", "Season 6, Episode 5 (The Door)"));
+        gotDeads.add(new Character("Tommen Baratheon", "Season 6, Episode 10 (The Winds of Winter)"));
+        gotDeads.add(new Character("Walder Frey", "Season 6, Episode 10 (The Winds of Winter)"));
+        gotDeads.add(new Character("Obara and Nymeria Sand", "Season 7, Episode 2 (Stormborn)"));
+        gotDeads.add(new Character("Olenna Tyrell", "Season 7, Episode 3 (The Queen's Justice)"));
+        gotDeads.add(new Character("Petyr Baelish", "Season 7, Episode 7 (The Dragon and the Wolf)"));
+        gotDeads.add(new Character("Viserion", "Season 7, Episode 6 (Beyond the Wall)"));
+        gotDeads.add(new Character("The Night King", "Season 8, Episode 3 (The Long Night)"));
+        gotDeads.add(new Character("Jorah Mormont", "Season 8, Episode 3 (The Long Night)"));
+        gotDeads.add(new Character("Theon Greyjoy", "Season 8, Episode 3 (The Long Night)"));
+        gotDeads.add(new Character("Melisandre", "Season 8, Episode 3 (The Long Night)"));
+        gotDeads.add(new Character("Missandei", "Season 8, Episode 4 (The Last of the Starks)"));
+        gotDeads.add(new Character("Varys", "Season 8, Episode 5 (The Bells)"));
+        gotDeads.add(new Character("Euron Greyjoy", "Season 8, Episode 5 (The Bells)"));
+        gotDeads.add(new Character("Cersei and Jaime Lannister", "Season 8, Episode 5 (The Bells)"));
+        gotDeads.add(new Character("Daenerys Targaryen", "Season 8, Episode 6 (The Iron Throne)"));
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            logger.error("Error", e); 
+        }
         return new ModelAndView("fragments/got-died",
-            Map.of("characters", gotDeaths.stream().filter(predicate -> predicate.toLowerCase().contains(search.toLowerCase())).toList()));
+            Map.of("characters", gotDeads.stream().filter(predicate ->
+                search.toLowerCase().equals("all") ||
+                predicate.name().toLowerCase().contains(search.toLowerCase())).toList()));
     }
 
     @PostMapping("/multiplication-table")
@@ -176,9 +185,9 @@ public class FragmentsController {
     @GetMapping("/multiply/progress")
     public ModelAndView multiplicationTableStatus(@RequestParam String taskId, HttpServletResponse response) {
         List<String> statuses = List.of(
-            "Aun realizando el calculo...", 
+            "Procesando...", 
             "Cargando un LLM...", 
-            "Solicituando datos al satelite...", 
+            "Solicitando datos al satelite...", 
             "Preguntando a la Oracle...", 
             "Pensando en la inmortalidad del cangrejo...",
             "Desansando un rato...",
@@ -196,21 +205,14 @@ public class FragmentsController {
             "Ahorita sale...",
             "Me repites la pregunta?...",
             "Deployando 3 Microservicios...",
-            "Ops, Windows se actualizo...",
+            "Oops, Windows se actualizo...",
             "Parece que necesitamos mas RAM...",
             "Preguntando a StackOverflow...",
             "Preguntando a la comunidad de Java...",
-            "Preguntando a la comunidad de Python...",
-            "Preguntando a la comunidad de JavaScript...",
-            "Preguntando a la comunidad de Go...",
-            "Preguntando a la comunidad de Rust...",
-            "Preguntando a la comunidad de Kotlin...",
-            "Preguntando a la comunidad de Swift...",
-            "Preguntando a la comunidad de C++...",
             "Aguanta no son enchiladas...",
-            "'Que como voy? dice el PM...",
+            "Que como voy? pregunta el PM...",
             "No nos responsabilizamos por el resultado...",
-            "Si lo sabes, porque preguntas?...",
+            "Si lo sabes, para preguntas?...",
             "No se, pero parece que se esta quemando..."
         );
         // randomly select a reason from reasones
@@ -230,7 +232,7 @@ public class FragmentsController {
             String[] values = taskId.split("x");
             return new ModelAndView("fragments/multiply-error",
                 Map.of("status", result, "a", values[0], "b", values[1],
-                "error", "Lo sientimos, no se pudo realizar la operacion"));
+                "error", "Lo sentimos, no se pudo realizar la operacion"));
         }
         return new ModelAndView("fragments/multiply-progress", Map.of("status", result));
     }
@@ -264,15 +266,52 @@ public class FragmentsController {
 
     @GetMapping("/categories/search")
     public ResponseEntity<String> searchCategories(@RequestParam String query) {
-        List<String> categories = List.of("Technology", "Science", "Health", "Education", "Sports", "Entertainment");
+        List<String> categories = List.of(
+            "Technology",
+            "Science",
+            "Health",
+            "Education",
+            "Sports", 
+            "Entertainment",
+            "Business",
+            "Politics",
+            "Art",
+            "Music",
+            "Movies",
+            "TV Shows",
+            "Books",
+            "Travel",
+            "Food",
+            "Fashion",
+            "Lifestyle",
+            "Fitness",
+            "Gaming",
+            "Pets",
+            "Home",
+            "Gardening",
+            "DIY",
+            "Crafts",
+            "Photography",
+            "Cars",
+            "Motorcycles",
+            "Bicycles",
+            "Planes",
+            "Trains"
+        );
         List<String> filteredCategories = categories.stream()
-                .filter(category -> category.toLowerCase().contains(query.toLowerCase()))
+                .filter(category ->
+                    query.toLowerCase().equals("all") || category.toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
 
         String options = filteredCategories.stream()
                 .map(category -> "<option value=\"" + category + "\">")
                 .collect(Collectors.joining());
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            logger.error("Error", e); 
+        }
         return ResponseEntity.ok(options);
     }
 
@@ -293,5 +332,8 @@ public class FragmentsController {
     }
 }
 
-record Person(String name, String lastName) {
+record Character(String name, String when) {
+    public String toString() {
+        return name + " - " + when;
+    }
 }

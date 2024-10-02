@@ -10,14 +10,14 @@
    }
 
    @keyframes slide-from-right {
-     from { transform: translateX(90px); }
+     from { transform: translateX(100%); }
    }
 
    @keyframes slide-to-left {
-     to { transform: translateX(-90px); }
+     to { transform: translateX(0); }
    }
 
-   .slide-it {
+   .slide-it-new {
      view-transition-name: slide-it;
    }
 
@@ -40,14 +40,14 @@
         <td class="col">
             <a href="/pages/showcase" class="btn btn-primary">Link clasico</a>
         </td>
-        <td class="col">
+        <td class="col here">
         </td>
     </tr>
     <tr class="row with-border">
         <td class="col">
             <div style="background-color: lightgray"
                 hx-get="/fragments/say-hello?name=JConf 2024"
-                hx-target="next td"
+                hx-target="#destination-1"
                 hx-trigger="click">
                 Hola!
             </div>
@@ -105,31 +105,18 @@
         <td class="col">
         </td>
     </tr>
-     <tr class="row with-border">
-        <td class="col">
-            <h5>Buscar categorías</h5>
-            <input class="form-control" type="text" 
-                name="query" placeholder="Escribe para buscar categorías..." 
-                list="category-list" 
-                hx-get="/fragments/categories/search" 
-                hx-trigger="input changed delay:500ms, enter" 
-                hx-target="#category-list" 
-                hx-indicator="#category-loading">
-            <datalist id="category-list"></datalist>
-        </td>
-        <td class="col">
-            <img id="category-loading" class="htmx-indicator" src="/loading.gif"/>
-        </td>
-    </tr>
     <tr class="row with-border">
         <td class="col">
             <h5>Buscar cuando murio un personaje de GOT</h5>
-            <input class="form-control" type="search" 
+            <input id="got-search" class="form-control" type="search" 
                 name="search" placeholder="Escribe para buscar personajes de GOT..." 
                 hx-post="/fragments/got/died" 
-                hx-trigger="input changed delay:500ms, search" 
+                hx-trigger="input[this.value.length >= 2] changed delay:500ms, enter[this.value.length >= 2]" 
                 hx-target="#got-search-results" 
                 hx-indicator="#got-loading">
+            <button class="btn btn-primary" onClick="document.querySelector('#got-search-results').innerHTML = ''">
+                Limpiar
+            </button>
         </td>
         <td class="col">
             <img id="got-loading" class="htmx-indicator" src="/loading.gif"/>
