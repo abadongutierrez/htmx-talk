@@ -29,6 +29,24 @@
      animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
      600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
    }
+
+   /* Shimmer effect */
+   .shimmer {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        width: 80px;
+        height: 20px; 
+   }
+
+   @keyframes shimmer {
+     0% {
+       background-position: -200% 0;
+     }
+     100% {
+       background-position: 200% 0;
+     }
+   }
 </style>
 
 <div id="general-error">
@@ -205,6 +223,44 @@
             </form>
         </td>
         <td class="col">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <button class="btn btn-primary"
+                hx-get="/fragments/multiple-fragments?echo=Echo!"
+                hx-target="next div"
+                hx-trigger="click">
+                Actualizaciones multiples
+            </button>
+            <div></div>
+        </td>
+        <td class="col">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dato 1</td>
+                        <td id="multiple-fragments-update-1"><div class="shimmer"></div></td>
+                    </tr>
+                    <tr>
+                        <td>Dato 2</td>
+                        <td id="multiple-fragments-update-2"><div class="shimmer"></div></td>
+                    <tr>
+                        <td>Dato 3</td>
+                        <td id="multiple-fragments-update-3"><div class="shimmer"></div></td>
+                    </tr>
+                    <tr>
+                        <td>Dato 4</td>
+                        <td id="multiple-fragments-update-4"><div class="shimmer"></div></td>
+                    </tr>
+                </tbody>
+            </table>
         </td>
     </tr>
     <tr class="row with-border">

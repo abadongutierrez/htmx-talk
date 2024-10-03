@@ -330,6 +330,11 @@ public class FragmentsController {
         }
         return ResponseEntity.ok(input);
     }
+
+    @GetMapping("/multiple-fragments")
+    public ModelAndView multipleFragments(@RequestParam String echo) {
+        return new ModelAndView("fragments/multiple-fragments", Map.of("echo", echo));
+    }
 }
 
 record Character(String name, String when) {
