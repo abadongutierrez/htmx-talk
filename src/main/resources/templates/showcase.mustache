@@ -96,10 +96,11 @@
                 hx-trigger="click"
                 hx-include="next form"
                 hx-validate="true"
+                hx-on:htmx:after-request="document.querySelector('#send-email-form').reset()"
                 >
                 Mandar correo
             </div>
-            <form>
+            <form id="send-email-form" hx-on:htmx:after-request="console.log('after-request en el form')">
                 <input type="text" name="name" class="form-control" placeholder="Your name" required
                     hx-on:htmx:validation:failed="this.reportValidity()">
                 <input type="email" name="email" class="form-control" placeholder="Your email"
@@ -284,9 +285,24 @@
                     hx-include="this"
                     >
                     Enviar
+                </button>
             </form>
         </td>
         <td class="col">
+        </td>
+    </tr>
+    <tr class="row with-border">
+        <td class="col">
+            <h5>CSS Transitions</h5>
+            <button class="btn btn-primary"
+                hx-get="/todos"
+                hx-swap="innerHTML"
+                hx-target="#todos-container">
+                Cargar ToDos
+            </button>
+        </td>
+        <td class="col">
+            <div id="todos-container"></div>
         </td>
     </tr>
     <tr class="row with-border">

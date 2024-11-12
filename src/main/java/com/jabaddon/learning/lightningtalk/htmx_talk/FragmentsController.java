@@ -32,8 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jabaddon.learning.lightningtalk.htmx_talk.Character;
-
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -44,6 +42,38 @@ public class FragmentsController {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private final ConcurrentHashMap<String, String> results = new ConcurrentHashMap<>();
+
+    private static final List<String> STATUS_MESSAGES = List.of(
+            "Procesando...",
+            "Cargando un LLM...",
+            "Solicitando datos al satelite...",
+            "Preguntando a la Oracle...",
+            "Pensando en la inmortalidad del cangrejo...",
+            "Desansando un rato...",
+            "Preguntando a la magica bola-8...",
+            "Reiniciando la Matrx...",
+            "Esperando la alineacion los planetas...",
+            "Contando las estrellas...",
+            "Ave Maria dame punteria...",
+            "Preparando cafe...",
+            "Encendiendo la Computadora Cuantica...",
+            "Ya casi, ya casi...",
+            "Creando un cluster de Kubernetes...",
+            "Preguntandole a Elon Musk...",
+            "Alimentando la AI...",
+            "Ahorita sale...",
+            "Me repites la pregunta?...",
+            "Deployando 3 Microservicios...",
+            "Oops, Windows se actualizo...",
+            "Parece que necesitamos mas RAM...",
+            "Preguntando a StackOverflow...",
+            "Preguntando a la comunidad de Java...",
+            "Aguanta no son enchiladas...",
+            "Que como voy? pregunta el PM...",
+            "No nos responsabilizamos por el resultado...",
+            "Si lo sabes, para preguntas?...",
+            "No se, pero parece que se esta quemando..."
+    );
 
     @GetMapping("/say-hello")
     public ModelAndView sayHello(@RequestParam String name, @RequestParam(required=false) String lastName) {
@@ -144,6 +174,18 @@ public class FragmentsController {
                 predicate.name().toLowerCase().contains(search.toLowerCase())).toList()));
     }
 
+    /**
+     * Starts the multiplication table calculation.
+     * 
+     * This method initiates a multiplication task with the given parameters. It generates a task ID based on the input numbers,
+     * stores an initial status message, and executes the calculation asynchronously. The calculation may fail based on the provided
+     * error probability. The result or error status is stored and can be retrieved later.
+     * 
+     * @param a the first number to multiply
+     * @param b the second number to multiply
+     * @param errorProbability the probability of an error occurring during the calculation (optional)
+     * @return a ModelAndView object containing the initial status of the calculation and the task ID
+     */
     @PostMapping("/multiplication-table")
     public ModelAndView multiplicationTable(@RequestParam int number,
         @RequestParam(required = false) Float errorProbability) {
@@ -182,47 +224,23 @@ public class FragmentsController {
         return errorProbability != null && ThreadLocalRandom.current().nextFloat() < errorProbability;
     }
 
+    /**
+     * Retrieves the status of a multiplication table calculation.
+     * 
+     * This method checks the status of a multiplication task identified by the given task ID.
+     * It randomly selects a status message from a predefined list if the task is still in progress.
+     * If the task is completed or has encountered an error, it adds "HX-Trigger" header to the response.
+     */
     @GetMapping("/multiply/progress")
     public ModelAndView multiplicationTableStatus(@RequestParam String taskId, HttpServletResponse response) {
-        List<String> statuses = List.of(
-            "Procesando...", 
-            "Cargando un LLM...", 
-            "Solicitando datos al satelite...", 
-            "Preguntando a la Oracle...", 
-            "Pensando en la inmortalidad del cangrejo...",
-            "Desansando un rato...",
-            "Preguntando a la magica bola-8...",
-            "Reiniciando la Matrx...",
-            "Esperando la alineacion los planetas...",
-            "Contando las estrellas...",
-            "Ave Maria dame punteria...",
-            "Preparando cafe...",
-            "Encendiendo la Computadora Cuantica...",
-            "Ya casi, ya casi...",
-            "Creando un cluster de Kubernetes...",
-            "Preguntandole a Elon Musk...",
-            "Alimentando la AI...",
-            "Ahorita sale...",
-            "Me repites la pregunta?...",
-            "Deployando 3 Microservicios...",
-            "Oops, Windows se actualizo...",
-            "Parece que necesitamos mas RAM...",
-            "Preguntando a StackOverflow...",
-            "Preguntando a la comunidad de Java...",
-            "Aguanta no son enchiladas...",
-            "Que como voy? pregunta el PM...",
-            "No nos responsabilizamos por el resultado...",
-            "Si lo sabes, para preguntas?...",
-            "No se, pero parece que se esta quemando..."
-        );
         // randomly select a reason from reasones
-        int index = ThreadLocalRandom.current().nextInt(0, statuses.size());
-        String resultOrStatus = results.getOrDefault(taskId, statuses.get(index));
+        int index = ThreadLocalRandom.current().nextInt(0, STATUS_MESSAGES.size());
+        String resultOrStatus = results.getOrDefault(taskId, STATUS_MESSAGES.get(index));
         if (isANumber(resultOrStatus) || resultOrStatus.equals("Error")) {
-            response.addHeader("HX-Trigger", "multiply-" + taskId + "-done");
+            response.addHeader("HX-Trigger", "multiply-" + taskId + "-done"); 
         }
         return new ModelAndView("fragments/multiply-progress",
-            Map.of("status", statuses.get(index), "taskId", taskId));
+            Map.of("status", STATUS_MESSAGES.get(index), "taskId", taskId));
     }
 
     @GetMapping("/multiply/done")

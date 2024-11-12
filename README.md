@@ -5,8 +5,7 @@ HTMX showcase
 Use Cases:
 
 - GET -> <a href="">
-- GET -> clicking on <div>
+- GET -> click on <div>
 - GET with query params -> click on <div>
-- GET with query params -> button and forms
-- form validation before requests
-- loading indicator
+- GET with query params and validation -> click on <div>
+- POST with data -> button

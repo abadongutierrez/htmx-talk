@@ -1,0 +1,58 @@
+<style>
+.todo-item.htmx-swapping {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.new-content.htmx-added {
+    opacity: 0
+}
+
+.new-content {
+    opacity: 1;
+    transition: opacity 1s ease-in;
+}
+</style>
+
+<div class="new-content">
+<h5>Todo Items</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#todos}}
+        <tr class="todo-item">
+            <td>{{id}}</td>
+            <td>{{description}}</td>
+            <td>
+                <!--
+                before-request and after-settle work better than using hx-disabled-elt
+                since the request return very quickly the button is enabled again before the TR disappears
+                -->
+                <button class="btn btn-danger"
+                    hx-delete="/todos/{{id}}"
+                    hx-on::before-request="this.disabled = true"
+                    hx-on::response-error="this.disabled = false"
+                    hx-on::send-error="this.disabled = false"
+                    hx-target="closest tr"
+                    hx-swap="delete swap:1s">
+                    Delete (bueno)
+                </button>
+                <button class="btn btn-danger"
+                    hx-delete="/todos/{{id}}"
+                    hx-disabled-elt="this"
+                    hx-target="closest tr"
+                    hx-swap="delete swap:1s">
+                    Delete (no tan bueno)
+                </button>
+            </td>
+        </tr>
+        {{/todos}}
+    </tbody>
+</table>
+</div>
